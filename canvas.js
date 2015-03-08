@@ -1,21 +1,25 @@
 var FONT = "15pt Arial";
+var SCALE = 800;
 
-CanvasRenderingContext2D.prototype.setDimensions = function (img) {
-    this.canvas.height = img.height;
-    this.canvas.width = img.width;
+CanvasRenderingContext2D.prototype.setDimensions = function (width, height) {
+    this.canvas.width = width;
+    this.canvas.height = height;
 };
 
 CanvasRenderingContext2D.prototype.caption = function (img, caption, logo) {
-    this.setDimensions(img);
-    this.drawImage(img, 0, 0);
+    var width = SCALE;
+    var height = SCALE * img.height / img.width;
+
+    this.setDimensions(width, height);
+    this.drawImage(img, 0, 0, width, height);
 
     this.shadowColor = "black";
     this.shadowBlur = 8;
     this.shadowOffsetX = 0;
     this.shadowOffsetY = 0;
     this.drawImage(logo,
-		   img.width - logo.width - 10,
-		   img.height - logo.height - 10);
+		   width - logo.width - 10,
+		   height - logo.height - 10);
 
     this.font = FONT;
     this.fillStyle = "white";
@@ -23,7 +27,7 @@ CanvasRenderingContext2D.prototype.caption = function (img, caption, logo) {
     this.shadowBlur = 8;
     this.shadowOffsetX = 5;
     this.shadowOffsetY = 5;
-    this.fillText(caption, 10, img.height - 10);
+    this.fillText(caption, 10, height - 10);
 };
 
 CanvasRenderingContext2D.prototype.clear = function () {
@@ -50,8 +54,13 @@ window.onload = function () {
 
     /* From robertnyman.com/2011/03/10/using-html5-canvas-drag-and-drop-and-file-api-to-offer-the-cure/. */
     img.addEventListener("load", function () {
-	ctx.clear();
-	ctx.caption(img, caption.value, logo);
+	if (img.width < SCALE) {
+	    alert("NO! UPLOAD BIGGAR IMAGE! YOU FOOOOOOOL");
+	}
+	else {
+	    ctx.clear();
+	    ctx.caption(img, caption.value, logo);
+	}
     }, false);
     
 
