@@ -16,8 +16,8 @@ CanvasRenderingContext2D.prototype.caption = function (img, caption, logo) {
 
     this.shadowColor = "black";
     this.shadowBlur = 8;
-    this.shadowOffsetX = 0;
-    this.shadowOffsetY = 0;
+    this.shadowOffsetX = 3;
+    this.shadowOffsetY = 3;
     this.drawImage(logo,
 		   width - logo.width - OFFSET,
 		   height - logo.height - OFFSET);
