@@ -1,6 +1,8 @@
+var FONT = "15pt Arial";
+
 CanvasRenderingContext2D.prototype.caption = function (img, caption) {
     this.drawImage(img, 0, 0);
-    this.font = "15pt Arial";
+    this.font = FONT;
     this.fillStyle = "white";
     this.shadowColor = "black";
     this.shadowBlur = 8;
@@ -11,10 +13,6 @@ CanvasRenderingContext2D.prototype.caption = function (img, caption) {
 
 CanvasRenderingContext2D.prototype.clear = function () {
     this.clearRect(0, 0, this.canvas.width, this.canvas.height);
-};
-
-var clearCanvas = function clearCanvasF (canvas, ctx) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
 };
 
 window.onload = function () {
