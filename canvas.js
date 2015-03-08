@@ -1,12 +1,17 @@
-var displayCaption = function displayCaptionF (ctx, img, caption) {
-    ctx.font = "15pt Arial";
-    ctx.fillStyle = "white";
-    ctx.shadowColor = "black";
-    ctx.shadowBlur = 8;
-    ctx.shadowOffsetX = 5;
-    ctx.shadowOffsetY = 5;
-    ctx.fillText(caption, 10, img.height - 10);
+CanvasRenderingContext2D.prototype.caption = function (img, caption) {
+    this.drawImage(img, 0, 0);
+    this.font = "15pt Arial";
+    this.fillStyle = "white";
+    this.shadowColor = "black";
+    this.shadowBlur = 8;
+    this.shadowOffsetX = 5;
+    this.shadowOffsetY = 5;
+    this.fillText(caption, 10, img.height - 10);
 }
+
+CanvasRenderingContext2D.prototype.clear = function () {
+    this.clearRect(0, 0, this.canvas.width, this.canvas.height);
+};
 
 var clearCanvas = function clearCanvasF (canvas, ctx) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -19,36 +24,36 @@ window.onload = function () {
     var caption = document.getElementById("caption");
 
     caption.onkeyup = function () {
-	// kind of hacky since it redraws every key up
-	ctx.drawImage(img, 0, 0);
-	displayCaption(ctx, img, caption.value);
+	// kind of hacky since it redraws the image every key up
+	ctx.caption(img, caption.value);
     };
 
+    /* From robertnyman.com/2011/03/10/using-html5-canvas-drag-and-drop-and-file-api-to-offer-the-cure/. */
     img.addEventListener("load", function () {
-	clearCanvas(canvas, ctx);
+	ctx.clear();
 	canvas.height = img.height;
 	canvas.width = img.width;
-	ctx.drawImage(img, 0, 0);
-	displayCaption(ctx, img, caption.value);
+	ctx.caption(img, caption.value);
     }, false);
     
 
-    canvas.addEventListener("dragover", function (evt) {
-	evt.preventDefault();
+    /* From robertnyman.com/2011/03/10/using-html5-canvas-drag-and-drop-and-file-api-to-offer-the-cure/. */
+    canvas.addEventListener("dragover", function (e) {
+	e.preventDefault();
     }, false);
 
-    canvas.addEventListener("drop", function (evt) {
-	var files = evt.dataTransfer.files;
+    /* From robertnyman.com/2011/03/10/using-html5-canvas-drag-and-drop-and-file-api-to-offer-the-cure/. */
+    canvas.addEventListener("drop", function (e) {
+	var files = e.dataTransfer.files;
 	if (files.length > 0) {
 	    var file = files[0];
-	    if (typeof FileReader !== "undefined" &&
-		file.type.indexOf("image") != -1) {
+	    if (typeof FileReader !== "undefined" && file.type.indexOf("image") != -1) {
 		var reader = new FileReader();
 		// Note: addEventListener doesn't work in Google Chrome for this event
-		reader.onload = function (evt) { img.src = evt.target.result; };
+		reader.onload = function (e) { img.src = e.target.result; };
 		reader.readAsDataURL(file);
 	    }
 	}
-	evt.preventDefault();
+	e.preventDefault();
     }, false);
 };
