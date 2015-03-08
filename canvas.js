@@ -36,6 +36,12 @@ window.onload = function () {
     var img = document.createElement("img");
     var logo = document.getElementById("logo");
     var caption = document.getElementById("caption");
+    var sample = document.getElementById("sample");
+    var sampleButton = document.getElementById("sample-button");
+
+    sampleButton.onclick = function () {
+	ctx.caption(sample, "So ya like captions...", logo);
+    }
 
     caption.onkeyup = function () {
 	// kind of hacky since it redraws the image every key up
