@@ -1,5 +1,6 @@
 var FONT = "15pt Arial";
 var SCALE = 800;
+var OFFSET = 30;
 
 CanvasRenderingContext2D.prototype.setDimensions = function (width, height) {
     this.canvas.width = width;
@@ -18,8 +19,8 @@ CanvasRenderingContext2D.prototype.caption = function (img, caption, logo) {
     this.shadowOffsetX = 0;
     this.shadowOffsetY = 0;
     this.drawImage(logo,
-		   width - logo.width - 10,
-		   height - logo.height - 10);
+		   width - logo.width - OFFSET,
+		   height - logo.height - OFFSET);
 
     this.font = FONT;
     this.fillStyle = "white";
@@ -27,7 +28,7 @@ CanvasRenderingContext2D.prototype.caption = function (img, caption, logo) {
     this.shadowBlur = 8;
     this.shadowOffsetX = 5;
     this.shadowOffsetY = 5;
-    this.fillText(caption, 10, height - 10);
+    this.fillText(caption, OFFSET, height - OFFSET);
 };
 
 CanvasRenderingContext2D.prototype.clear = function () {
