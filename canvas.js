@@ -5,9 +5,18 @@ CanvasRenderingContext2D.prototype.setDimensions = function (img) {
     this.canvas.width = img.width;
 };
 
-CanvasRenderingContext2D.prototype.caption = function (img, caption) {
+CanvasRenderingContext2D.prototype.caption = function (img, caption, logo) {
     this.setDimensions(img);
     this.drawImage(img, 0, 0);
+
+    this.shadowColor = "black";
+    this.shadowBlur = 8;
+    this.shadowOffsetX = 0;
+    this.shadowOffsetY = 0;
+    this.drawImage(logo,
+		   img.width - logo.width - 10,
+		   img.height - logo.height - 10);
+
     this.font = FONT;
     this.fillStyle = "white";
     this.shadowColor = "black";
@@ -25,17 +34,18 @@ window.onload = function () {
     var canvas = document.getElementById("my");
     var ctx = canvas.getContext("2d");
     var img = document.createElement("img");
+    var logo = document.getElementById("logo");
     var caption = document.getElementById("caption");
 
     caption.onkeyup = function () {
 	// kind of hacky since it redraws the image every key up
-	ctx.caption(img, caption.value);
+	ctx.caption(img, caption.value, logo);
     };
 
     /* From robertnyman.com/2011/03/10/using-html5-canvas-drag-and-drop-and-file-api-to-offer-the-cure/. */
     img.addEventListener("load", function () {
 	ctx.clear();
-	ctx.caption(img, caption.value);
+	ctx.caption(img, caption.value, logo);
     }, false);
     
 
