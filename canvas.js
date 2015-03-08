@@ -69,7 +69,12 @@ window.onload = function () {
 		file.type.indexOf("image") != -1) {
 		var reader = new FileReader();
 		// Note: addEventListener doesn't work in Google Chrome for this event
-		reader.onload = function (e) { img.src = e.target.result; };
+		reader.addEventListener("onload", function (e) {
+		    img.src = e.target.result;
+		});
+		reader.onload = function (e) {
+		    img.src = e.target.result;
+		};
 		reader.readAsDataURL(file);
 	    }
 	}
