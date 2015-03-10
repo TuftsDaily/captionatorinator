@@ -76,7 +76,7 @@ window.onload = function () {
 	if (evt.dataTransfer)
 	    file = evt.dataTransfer.files[0];
 	else
-	    file = evt.target.files[0];
+	    file = files.files[0];
 
 	if (typeof FileReader !== "undefined" &&
 	    file.type.indexOf("image") != -1) {
