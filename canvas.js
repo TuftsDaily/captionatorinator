@@ -56,6 +56,7 @@ window.onload = function () {
 
     /* From robertnyman.com/2011/03/10/using-html5-canvas-drag-and-drop-and-file-api-to-offer-the-cure/. */
     img.addEventListener("load", function () {
+	//console.log("Image width: ", img.width, SCALE);
 	if (img.width < SCALE) {
 	    alert("NO! UPLOAD BIGGAR IMAGE! YOU FOOOOOOOL");
 	}
@@ -64,7 +65,7 @@ window.onload = function () {
 	    ctx.caption(img, caption.value, logo);
 	}
     }, false);
-    
+
 
     /* From robertnyman.com/2011/03/10/using-html5-canvas-drag-and-drop-and-file-api-to-offer-the-cure/. */
     canvas.addEventListener("dragover", function (e) {
@@ -73,12 +74,15 @@ window.onload = function () {
 
     var handleFiles = function handleFilesF (evt) {
 	var file;
+	var files = evt.files;
+
 	if (evt.dataTransfer)
 	    file = evt.dataTransfer.files[0];
 	else
-	    file = files.files[0];
+	    file = fileEl.files[0];
 
 	if (typeof FileReader !== "undefined" &&
+	    typeof file !== "undefined" &&
 	    file.type.indexOf("image") != -1) {
 	    var reader = new FileReader();
 	    // Note: addEventListener doesn't work in Google Chrome for this event
@@ -90,6 +94,11 @@ window.onload = function () {
 	    };
 	    reader.readAsDataURL(file);
 	}
+	else {
+	    console.log("undefined");
+	    console.log(evt.dataTransfer);
+	    //console.log(evt.dataTransfer.files);
+	}
     }
 
     canvas.addEventListener("click", function () {
@@ -100,7 +109,7 @@ window.onload = function () {
 
     /* From robertnyman.com/2011/03/10/using-html5-canvas-drag-and-drop-and-file-api-to-offer-the-cure/. */
     canvas.addEventListener("drop", function (e) {
-	handleFiles(e.dataTransfer.files);
+	handleFiles(e);
 	e.preventDefault();
     }, false);
 };
