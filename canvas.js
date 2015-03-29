@@ -1,6 +1,8 @@
 var FONT = "15pt Arial";
 var SCALE = 800;
 var OFFSET = 30;
+var SAMPLE_CREDIT = "by Nick Pfosi";
+var IMAGE_SMALL_ERROR = "NO! UPLOAD BIGGAR IMAGE! YOU FOOOOOOOL";
 
 CanvasRenderingContext2D.prototype.setDimensions = function (width, height) {
     this.canvas.width = width;
@@ -46,7 +48,7 @@ window.onload = function () {
     var fileEl = document.getElementById("file");
 
     sampleButton.onclick = function () {
-	ctx.caption(sample, "by Nick Pfosi", logo);
+	ctx.caption(sample, SAMPLE_CREDIT, logo);
     }
 
     caption.onkeyup = function () {
@@ -56,9 +58,8 @@ window.onload = function () {
 
     /* From robertnyman.com/2011/03/10/using-html5-canvas-drag-and-drop-and-file-api-to-offer-the-cure/. */
     img.addEventListener("load", function () {
-	//console.log("Image width: ", img.width, SCALE);
 	if (img.width < SCALE) {
-	    alert("NO! UPLOAD BIGGAR IMAGE! YOU FOOOOOOOL");
+	    alert(IMAGE_SMALL_ERROR);
 	}
 	else {
 	    ctx.clear();
@@ -93,11 +94,6 @@ window.onload = function () {
 		img.src = e.target.result;
 	    };
 	    reader.readAsDataURL(file);
-	}
-	else {
-	    console.log("undefined");
-	    console.log(evt.dataTransfer);
-	    //console.log(evt.dataTransfer.files);
 	}
     }
 
