@@ -46,7 +46,7 @@ window.onload = function () {
     var fileEl = document.getElementById("file");
 
     sampleButton.onclick = function () {
-	ctx.caption(sample, "So ya like captions...", logo);
+	ctx.caption(sample, "by Nick Pfosi", logo);
     }
 
     caption.onkeyup = function () {
