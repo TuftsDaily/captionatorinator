@@ -21,8 +21,8 @@ CanvasRenderingContext2D.prototype.caption = function (img, caption, logo) {
     this.shadowOffsetX = 3;
     this.shadowOffsetY = 3;
     this.drawImage(logo,
-		   width - logo.width - OFFSET,
-		   height - logo.height - OFFSET);
+        width - logo.width - OFFSET,
+        height - logo.height - OFFSET);
 
     this.font = FONT;
     this.fillStyle = "white";
@@ -48,64 +48,64 @@ window.onload = function () {
     var fileEl = document.getElementById("file");
 
     sampleButton.onclick = function () {
-	ctx.caption(sample, SAMPLE_CREDIT, logo);
+        ctx.caption(sample, SAMPLE_CREDIT, logo);
     }
 
     caption.onkeyup = function () {
-	// kind of hacky since it redraws the image every key up
-	ctx.caption(img, caption.value, logo);
+        // kind of hacky since it redraws the image every key up
+        ctx.caption(img, caption.value, logo);
     };
 
     /* From robertnyman.com/2011/03/10/using-html5-canvas-drag-and-drop-and-file-api-to-offer-the-cure/. */
     img.addEventListener("load", function () {
-	if (img.width < SCALE) {
-	    alert(IMAGE_SMALL_ERROR);
-	}
-	else {
-	    ctx.clear();
-	    ctx.caption(img, caption.value, logo);
-	}
+        if (img.width < SCALE) {
+            alert(IMAGE_SMALL_ERROR);
+        }
+        else {
+            ctx.clear();
+            ctx.caption(img, caption.value, logo);
+        }
     }, false);
 
 
     /* From robertnyman.com/2011/03/10/using-html5-canvas-drag-and-drop-and-file-api-to-offer-the-cure/. */
     canvas.addEventListener("dragover", function (e) {
-	e.preventDefault();
+        e.preventDefault();
     }, false);
 
     var handleFiles = function handleFilesF (evt) {
-	var file;
-	var files = evt.files;
+        var file;
+        var files = evt.files;
 
-	if (evt.dataTransfer)
-	    file = evt.dataTransfer.files[0];
-	else
-	    file = fileEl.files[0];
+        if (evt.dataTransfer)
+            file = evt.dataTransfer.files[0];
+        else
+            file = fileEl.files[0];
 
-	if (typeof FileReader !== "undefined" &&
-	    typeof file !== "undefined" &&
-	    file.type.indexOf("image") != -1) {
-	    var reader = new FileReader();
-	    // Note: addEventListener doesn't work in Google Chrome for this event
-	    reader.addEventListener("onload", function (e) {
-		img.src = e.target.result;
-	    });
-	    reader.onload = function (e) {
-		img.src = e.target.result;
-	    };
-	    reader.readAsDataURL(file);
-	}
+        if (typeof FileReader !== "undefined" &&
+            typeof file !== "undefined" &&
+            file.type.indexOf("image") != -1) {
+                var reader = new FileReader();
+                // Note: addEventListener doesn't work in Google Chrome for this event
+                reader.addEventListener("onload", function (e) {
+                    img.src = e.target.result;
+                });
+                reader.onload = function (e) {
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+        }
     }
 
     canvas.addEventListener("click", function () {
-	fileEl.click();
+        fileEl.click();
     });
 
     fileEl.addEventListener("change", handleFiles, false);
 
     /* From robertnyman.com/2011/03/10/using-html5-canvas-drag-and-drop-and-file-api-to-offer-the-cure/. */
     canvas.addEventListener("drop", function (e) {
-	handleFiles(e);
-	e.preventDefault();
+        handleFiles(e);
+        e.preventDefault();
     }, false);
 };
